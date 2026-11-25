@@ -40,7 +40,7 @@ test("ningún precio escrito a mano fuera de catalogo.ts", () => {
   const permitidos = new Set([join("src", "lib", "catalogo.ts"), join("src", "lib", "catalogo.test.ts")]);
   const patron = /US\$\s?\d|USD\s?\d|\d+\s?(?:USD|dólares)\b/i;
   const infractores: string[] = [];
-  for (const base of ["src", "scripts", "content", "outbound"]) {
+  for (const base of ["src", "scripts", "content", "outbound", "docs", ".claude/commands", ".claude/agents"]) {
     let lista: string[] = [];
     try {
       lista = archivos(base);
