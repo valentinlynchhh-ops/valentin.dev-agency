@@ -22,7 +22,7 @@ export function Footer({ conCierre = true }: { conCierre?: boolean }) {
             </span>
           </h2>
           <p className="vd-cierre__p">Contame qué tenés en mente. Yo me encargo de hacerlo realidad.</p>
-          <Link href="/#contacto" className="btn btn-primary vd-btn-xl">
+          <Link href="/#contacto" className="btn btn-primary vd-btn-xl" data-mag>
             Hablemos de tu proyecto <Flecha />
           </Link>
         </section>
@@ -92,6 +92,9 @@ export function Footer({ conCierre = true }: { conCierre?: boolean }) {
           </a>
         </div>
       </div>
+      <p className="x-gigante" aria-hidden="true">
+        valentin<span>.dev</span>
+      </p>
     </footer>
   );
 }

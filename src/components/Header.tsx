@@ -60,21 +60,17 @@ export function Header({ items }: { items: readonly Item[] }) {
           {abierto ? "Cerrar" : "Menú"}
         </button>
       </div>
-      {abierto && (
-        <nav id="menu-movil" className="menu-panel" aria-label="Menú">
-          {items.map((it) => (
-            <Link key={it.href} href={it.href} aria-current={actual(it.href)} onClick={() => setAbierto(false)}>
-              {it.etiqueta}
-            </Link>
-          ))}
-          <Link href="/cotizar" onClick={() => setAbierto(false)}>
-            Cotizar
+      <nav id="menu-movil" className="menu-panel" aria-label="Menú" data-abierto={abierto} inert={!abierto}>
+        {[...items, { href: "/cotizar", etiqueta: "Cotizar" }].map((it, i) => (
+          <Link key={it.href} href={it.href} aria-current={actual(it.href)} onClick={() => setAbierto(false)} style={{ ["--i" as string]: i }}>
+            <span>0{i + 1}</span>
+            {it.etiqueta}
           </Link>
-          <Link href="/#contacto" className="btn btn-primary" onClick={() => setAbierto(false)}>
-            Hablemos <Flecha />
-          </Link>
-        </nav>
-      )}
+        ))}
+        <Link href="/#contacto" className="btn btn-primary menu-panel__cta" onClick={() => setAbierto(false)} style={{ ["--i" as string]: items.length + 1 }}>
+          Hablemos <Flecha />
+        </Link>
+      </nav>
     </header>
   );
 }

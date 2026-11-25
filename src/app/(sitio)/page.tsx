@@ -2,14 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { metaPagina } from "@/lib/seo";
-import { PASOS, TRABAJOS } from "@/lib/sitio";
+import { PASOS, SERVICIOS_DETALLE, TRABAJOS } from "@/lib/sitio";
+import { precioTexto, servicioPorId } from "@/lib/catalogo";
 import { COMISION_PCT, MIN_PROYECTOS_MES, ejemplosComision } from "@/lib/vendedores";
 import { Flecha } from "@/components/Marca";
 import { Icon } from "@/components/Icon";
 import { HorizonScene } from "@/components/Horizon";
 import { HighlightText } from "@/components/HighlightText";
-import { Carrusel } from "@/components/Carrusel";
-import { Tilt } from "@/components/Tilt";
+import { HeroGL } from "@/components/HeroGL";
+import { Split, Marquee } from "@/components/Split";
+import { Galeria } from "@/components/Galeria";
 import { Dialogo } from "@/components/Dialogo";
 import { ReunionPanel } from "@/components/ReunionPanel";
 import { PostularForm } from "@/components/PostularForm";
@@ -30,95 +32,104 @@ export default function Inicio() {
     <>
       <JsonLd ruta="/" />
 
-      {/* 01 · Hero */}
-      <section className="vd-hero" aria-labelledby="t-h1">
-        <HorizonScene variante="hero" id="hero" />
-        <div className="vd-hero__in">
-          <h1 id="t-h1" className="vd-h1 vd-in">
-            <span>Diseño productos</span>
-            <span>
-              que generan <HighlightText>negocio.</HighlightText>
+      {/* 01 · Hero: shader de seda + titular cinético */}
+      <section className="x-hero" aria-labelledby="t-h1" data-scrub>
+        <HorizonScene variante="hero" id="hero" ligera />
+        <HeroGL />
+        <div className="x-hero__vel" aria-hidden="true" />
+        <span className="x-px x-px--a" aria-hidden="true" />
+        <span className="x-px x-px--b" aria-hidden="true" />
+        <div className="x-hero__in">
+          <p className="x-hero__tag label">
+            <i aria-hidden="true" /> Agencia web · Argentina
+          </p>
+          <h1 id="t-h1" className="x-h1">
+            <Split as="span" modo="carga" texto="Diseño productos" />
+            <span className="x-h1__2">
+              <Split as="span" modo="carga" texto="que generan" desde={3} /> <HighlightText>negocio.</HighlightText>
             </span>
           </h1>
-          <p className="vd-hero__sub vd-in vd-in-2">Estrategia, diseño y desarrollo digital para ideas que escalan.</p>
-          <div className="vd-actions vd-in vd-in-3">
-            <Link href="/#contacto" className="btn btn-primary vd-btn-xl">
+          <p className="x-hero__sub">Estrategia, diseño y desarrollo digital para ideas que escalan.</p>
+          <div className="vd-actions x-hero__cta">
+            <Link href="/#contacto" className="btn btn-primary vd-btn-xl" data-mag>
               Hablemos <Flecha />
             </Link>
-            <Link href="#proyectos" className="btn btn-outline vd-btn-xl">
+            <Link href="#proyectos" className="btn btn-outline vd-btn-xl" data-mag>
               Ver proyectos <Icon name="down" size={20} />
             </Link>
           </div>
-          <p className="vd-hero__mini vd-in vd-in-4">
+          <p className="vd-hero__mini x-hero__mini">
             ¿Querés saber cuánto sale tu web? <Link href="/cotizar">Cotizala acá ↗</Link>
           </p>
         </div>
-        <a href="#proyectos" className="vd-chevron" aria-label="Ir a los proyectos">
-          <Icon name="down" size={32} />
+        <a href="#proyectos" className="x-scroll" aria-label="Ir a los proyectos">
+          <span>Scroll</span>
+          <i aria-hidden="true" />
         </a>
       </section>
 
-      {/* 02 · Proyectos: el museo */}
-      <section id="proyectos" className="vd-proy" aria-labelledby="t-proy">
-        <HorizonScene variante="proyectos" id="pro" />
+      <Marquee>
+        {["Landings", "Webs a medida", "Sistemas", "Automatizaciones", "Diseño", "Desarrollo"].map((p) => (
+          <span key={p} className="x-marquee__i">
+            {p} <i />
+          </span>
+        ))}
+      </Marquee>
+
+      {/* 02 · Qué hago */}
+      <section className="x-serv" aria-labelledby="t-serv">
         <div className="vd-wrap vd-wrap--wide">
-          <div className="vd-proy__head vd-rise">
-            <h2 id="t-proy" className="vd-h2">
-              De la idea a la <HighlightText>realidad.</HighlightText>
-            </h2>
-            <p>Algunos de los sitios y productos digitales que diseñé y desarrollé.</p>
-          </div>
-          <Carrusel etiqueta="Obras del museo" className="vd-rise">
-            {TRABAJOS.map((t, i) => (
-              <article key={t.id} className="vd-frame">
-                <div className="vd-luz" aria-hidden="true" />
-                <Tilt>
-                  <a className="vd-art" href={t.url} target="_blank" rel="noopener noreferrer" aria-label={`${t.nombre}: visitar ${t.host} (se abre en otra pestaña)`}>
-                    <Image src={t.imagenCard} alt={t.altImagen} width={780} height={1012} sizes="(min-width: 1280px) 19vw, (min-width: 960px) 30vw, (min-width: 640px) 46vw, 76vw" priority={i === 0} />
-                  </a>
-                </Tilt>
-                <div className="vd-cartela">
-                  <span className="label">Sala 0{i + 1}</span>
-                  <h3>
-                    <a href={t.url} target="_blank" rel="noopener noreferrer">
-                      {t.nombre} <Flecha />
-                    </a>
-                  </h3>
-                  <p>{t.corta}</p>
+          <p className="label x-reveal">Qué hago</p>
+          <h2 id="t-serv" className="x-h2">
+            <Split texto="Tres cosas, bien hechas." />
+          </h2>
+          <ul className="x-serv__lista">
+            {SERVICIOS_DETALLE.map((s, i) => (
+              <li key={s.id} className="x-serv__fila" data-spot>
+                <span className="x-serv__n">0{i + 1}</span>
+                <div className="x-serv__t">
+                  <h3>{s.nombre}</h3>
+                  <p>{s.paraQuien}</p>
                 </div>
-              </article>
-            ))}
-            <article className="vd-frame">
-              <div className="vd-luz" aria-hidden="true" />
-              <Tilt>
-                <Link className="vd-art vd-art--vacio" href="/#contacto">
-                  <span>
-                    <span className="label">Próxima sala</span>
-                    <b>Tu proyecto</b>
-                  </span>
+                <b className="x-serv__p">{precioTexto(servicioPorId(s.id))}</b>
+                <Link href="/cotizar" className="x-serv__go" aria-label={`Cotizar: ${s.nombre}`} data-mag>
+                  <Flecha />
                 </Link>
-              </Tilt>
-              <div className="vd-cartela">
-                <span className="label">Sala 0{TRABAJOS.length + 1}</span>
-                <h3>
-                  <Link href="/#contacto" style={{ textDecoration: "none", display: "inline-flex", gap: 10, alignItems: "center" }}>
-                    Esperando tu web <Flecha />
-                  </Link>
-                </h3>
-                <p>El próximo en entrar al museo podés ser vos.</p>
-              </div>
-            </article>
-          </Carrusel>
-          <p className="vd-proy__more vd-rise">
-            <Link href="/museo" className="btn btn-outline">
-              Recorré el museo completo <Flecha />
-            </Link>
-          </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 03 · Proyectos: el museo (galería fijada) */}
+      <Galeria />
+
+      {/* 04 · Proceso */}
+      <section className="x-proc" aria-labelledby="t-proc" data-scrub>
+        <div className="vd-wrap vd-wrap--wide">
+          <p className="label x-reveal">Cómo trabajo</p>
+          <h2 id="t-proc" className="x-h2">
+            <Split texto="Cuatro pasos, sin sorpresas." />
+          </h2>
+          <ol className="x-proc__lista">
+            <span className="x-proc__linea" aria-hidden="true">
+              <i />
+            </span>
+            {PASOS.map((p) => (
+              <li key={p.n} className="x-proc__paso">
+                <span className="x-proc__n" aria-hidden="true">
+                  {p.n}
+                </span>
+                <h3>{p.titulo}</h3>
+                <p>{p.texto}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
       {/* 03 · Agendar */}
-      <section id="contacto" className="vd-agenda" aria-labelledby="t-ag">
+      <section id="contacto" className="vd-agenda x-mesh" aria-labelledby="t-ag">
         <HorizonScene variante="agenda" id="age" />
         <div className="vd-wrap">
           <div className="vd-agenda__grid">
@@ -184,12 +195,13 @@ export default function Inicio() {
       </section>
 
       {/* 04 · Sobre mí */}
-      <section id="sobre-mi" className="vd-sobre" aria-labelledby="t-sobre">
+      <section id="sobre-mi" className="vd-sobre x-mesh" aria-labelledby="t-sobre">
         <HorizonScene variante="about" id="sob" />
         <div className="vd-wrap vd-wrap--wide">
           <div className="vd-sobre__grid">
             <div className="vd-retrato-wrap vd-rise">
-              <div className="vd-retrato">
+              <svg className="x-anillo" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="x-circ" d="M100 100m-84 0a84 84 0 1 1 168 0a84 84 0 1 1-168 0" /></defs><text><textPath href="#x-circ">Diseño · Desarrollo · Automatizaciones · Producto · </textPath></text></svg>
+              <div className="vd-retrato" data-spot>
                 <Image src="/img/valentin.webp" alt="Retrato de Valentín Lynch" width={900} height={1200} sizes="(min-width: 1024px) 40vw, 90vw" />
               </div>
             </div>
@@ -207,7 +219,7 @@ export default function Inicio() {
                 <div className="vd-card">
                   <Icon name="layers" size={34} />
                   <span>
-                    <b>{TRABAJOS.length} sitios</b>
+                    <b><span data-count={TRABAJOS.length}>{TRABAJOS.length}</span> sitios</b>
                     <small>En el museo de trabajos</small>
                   </span>
                 </div>
@@ -243,7 +255,7 @@ export default function Inicio() {
       </section>
 
       {/* 05 · Vendedores */}
-      <section id="vendedores" className="vd-vend" aria-labelledby="t-vend">
+      <section id="vendedores" className="vd-vend x-mesh" data-scrub aria-labelledby="t-vend">
         <HorizonScene variante="vendedores" id="ven" />
         <div className="vd-wrap vd-wrap--wide">
           <div className="vd-vend__grid">
@@ -268,7 +280,7 @@ export default function Inicio() {
                     <li>Si te sumás, te paso tu código de vendedor. Cada consulta que entre por tu link queda asociada a vos.</li>
                     <li>Presentás la propuesta y acompañás al cliente hasta cerrar.</li>
                     <li>
-                      Cobrás el <b>{COMISION_PCT}%</b> de cada proyecto efectivamente cobrado.
+                      Cobrás el <b><span data-count={COMISION_PCT}>{COMISION_PCT}</span>%</b> de cada proyecto efectivamente cobrado.
                     </li>
                   </ol>
                   <p>

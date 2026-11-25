@@ -2,6 +2,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MotionRoot } from "@/components/Motion";
 import { RefCapture } from "@/components/RefCapture";
+import { Experience } from "@/components/Experience";
+import "lenis/dist/lenis.css";
+import "../experiencia.css";
 
 /* Navegación principal (maqueta aprobada): Proyectos, Servicios, Sobre mí, Recursos. Cada ítem tiene destino real. */
 const NAV = [
@@ -17,6 +20,8 @@ export default function SitioLayout({ children }: { children: React.ReactNode })
       <a className="skip" href="#contenido">Saltar al contenido</a>
       <MotionRoot />
       <RefCapture />
+      <Experience />
+      <div className="x-progreso" aria-hidden="true" />
       <Header items={NAV} />
       <main id="contenido">{children}</main>
       <Footer />

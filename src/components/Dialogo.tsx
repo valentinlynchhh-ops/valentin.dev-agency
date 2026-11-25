@@ -12,7 +12,7 @@ export function Dialogo({ etiqueta, clase = "btn btn-outline", titulo, children,
         {icono}
         {etiqueta}
       </button>
-      <dialog
+      <dialog data-lenis-prevent
         ref={ref}
         className="vd-dialog"
         aria-labelledby={id}
