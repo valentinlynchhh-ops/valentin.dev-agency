@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm run lint)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run verificar)",
+      "Bash(npm test)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(npx eslint:*)",
+      "Bash(node --test:*)",
+      "Bash(node scripts/muestras/generar.mjs:*)",
+      "Bash(node scripts/outbound/render.mjs:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push -u origin:*)",
+      "mcp__Supabase__list_tables",
+      "mcp__Supabase__list_migrations",
+      "mcp__Supabase__get_advisors",
+      "mcp__Supabase__generate_typescript_types",
+      "mcp__Vercel__list_projects",
+      "mcp__Vercel__list_deployments",
+      "mcp__Vercel__get_deployment",
+      "mcp__Vercel__get_runtime_errors",
+      "mcp__Vercel__get_runtime_logs",
+      "mcp__Vercel__filter_project_envs",
+      "mcp__Resend__list-domains",
+      "mcp__Resend__list-emails",
+      "mcp__Resend__get-email"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "mcp__Supabase__apply_migration",
+      "mcp__Supabase__execute_sql",
+      "mcp__Supabase__create_project",
+      "mcp__Vercel__create_project_env",
+      "mcp__Vercel__edit_project_env",
+      "mcp__Vercel__add_project_domain",
+      "mcp__Resend__send-email",
+      "mcp__Resend__send-batch-emails",
+      "mcp__Gmail__send_message"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(rm -rf:*)",
+      "mcp__Vercel__buy_domain",
+      "mcp__Vercel__create_or_transfer_domain"
+    ]
+  }
+}

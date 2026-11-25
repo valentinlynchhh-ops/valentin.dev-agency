@@ -1,0 +1,19 @@
+{
+  "ficticio": true,
+  "negocio": "Estudio Ejemplo Lavalle & Asociados",
+  "rubro": "estudio-juridico",
+  "ciudad": "San Isidro",
+  "direccion": "Av. Ejemplo 1234, piso 3",
+  "telefono": "+54 11 0000-0000",
+  "whatsapp": "+54 9 11 0000-0000",
+  "email": "consultas@estudio-ejemplo.example",
+  "descripcion": "Estudio jurídico de ejemplo con datos ficticios. Atiende consultas laborales, de familia y sucesiones en zona norte.",
+  "servicios": [
+    { "nombre": "Derecho laboral", "detalle": "Despidos, accidentes de trabajo y reclamos por trabajo no registrado." },
+    { "nombre": "Familia", "detalle": "Divorcios, cuota alimentaria y régimen de comunicación." },
+    { "nombre": "Sucesiones", "detalle": "Trámite sucesorio completo y declaratoria de herederos." },
+    { "nombre": "Daños y accidentes de tránsito", "detalle": "Reclamos a aseguradoras por daños materiales y lesiones." }
+  ],
+  "horarios": ["Lunes a viernes de 9 a 18 h"],
+  "instagram": "@estudio.ejemplo"
+}

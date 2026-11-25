@@ -1,0 +1,19 @@
+{
+  "ficticio": true,
+  "negocio": "Propiedades Ejemplo del Parque",
+  "rubro": "inmobiliaria",
+  "ciudad": "Córdoba",
+  "direccion": "Bv. Ejemplo 500",
+  "telefono": "+54 351 000-0000",
+  "whatsapp": "+54 9 351 000-0000",
+  "email": "hola@inmobiliaria-ejemplo.example",
+  "descripcion": "Inmobiliaria de ejemplo con datos ficticios: venta y alquiler de casas y departamentos en barrio Parque.",
+  "servicios": [
+    { "nombre": "Venta de propiedades", "detalle": "Casas, departamentos y terrenos en Córdoba capital." },
+    { "nombre": "Alquileres", "detalle": "Departamentos y casas para vivir, con contrato y administración." },
+    { "nombre": "Tasaciones", "detalle": "Te decimos cuánto vale tu propiedad antes de publicarla." },
+    { "nombre": "Locales comerciales" },
+    { "nombre": "Administración de alquileres" }
+  ],
+  "horarios": ["Lunes a viernes de 9:30 a 18 h", "Sábados de 10 a 13 h"]
+}

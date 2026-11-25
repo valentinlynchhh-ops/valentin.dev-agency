@@ -1,0 +1,19 @@
+{
+  "ficticio": true,
+  "negocio": "Estudio Contable Ejemplo Ruiz",
+  "rubro": "estudio-contable",
+  "ciudad": "Rosario",
+  "direccion": "Calle Ejemplo 845, oficina 2",
+  "telefono": "+54 341 000-0000",
+  "whatsapp": "+54 9 341 000-0000",
+  "email": "estudio@contable-ejemplo.example",
+  "descripcion": "Estudio contable de ejemplo con datos ficticios, para monotributistas, autónomos y pymes de Rosario.",
+  "servicios": [
+    { "nombre": "Monotributo", "detalle": "Alta, recategorización y pagos al día." },
+    { "nombre": "Ganancias y Bienes Personales", "detalle": "Declaraciones juradas de personas humanas." },
+    { "nombre": "Liquidación de sueldos", "detalle": "Recibos, cargas sociales y altas de empleados." },
+    { "nombre": "Contabilidad para pymes", "detalle": "Balances, IVA e Ingresos Brutos." },
+    { "nombre": "Sociedades", "detalle": "Constitución de SAS y SRL." }
+  ],
+  "horarios": "Lunes a viernes de 8 a 17 h"
+}
