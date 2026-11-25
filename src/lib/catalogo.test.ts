@@ -40,6 +40,11 @@ test("ningún precio escrito a mano fuera de catalogo.ts", () => {
   const permitidos = new Set([join("src", "lib", "catalogo.ts"), join("src", "lib", "catalogo.test.ts")]);
   const patron = /US\$\s?\d|USD\s?\d|\d+\s?(?:USD|dólares)\b/i;
   const infractores: string[] = [];
+  // Archivos sueltos de la raíz que también se revisan.
+  const raiz = ["README.md", "CLAUDE.md", "AGENTS.md"].filter((f) => { try { statSync(f); return true; } catch { return false; } });
+  for (const f of raiz) {
+    readFileSync(f, "utf8").split("\n").forEach((l, i) => { if (patron.test(l)) infractores.push(`${f}:${i + 1}: ${l.trim().slice(0, 90)}`); });
+  }
   for (const base of ["src", "scripts", "content", "outbound", "docs", ".claude/commands", ".claude/agents"]) {
     let lista: string[] = [];
     try {
