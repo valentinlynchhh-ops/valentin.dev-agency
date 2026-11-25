@@ -1,5 +1,6 @@
 import { CATALOGO, CONDICIONES_WEB, PRECIO_MINIMO_USD, precioTexto, usd } from "./catalogo.ts";
-import { FAQ, MARCA, PAGINAS, SERVICIOS_DETALLE, SITE_URL, TRABAJOS } from "./sitio.ts";
+import { COMISION_PCT, MIN_PROYECTOS_MES } from "./vendedores.ts";
+import { EMAIL_PUBLICO, FAQ, MARCA, PAGINAS, SERVICIOS_DETALLE, SITE_URL, TRABAJOS } from "./sitio.ts";
 
 /** llms.txt generado desde las mismas fuentes que las páginas: no hay copia a mano que se desactualice. */
 export function llmsTxt(): string {
@@ -13,6 +14,8 @@ export function llmsTxt(): string {
   l.push(
     `- Web a medida con sistema de consultas: ${CONDICIONES_WEB.seniaInicioPct}% al arrancar y ${CONDICIONES_WEB.pagoAlPublicarPct}% al publicar, ${CONDICIONES_WEB.plazoDiasHabiles} días hábiles, ${CONDICIONES_WEB.incluye}, ${CONDICIONES_WEB.rondasDeCambios} rondas de cambios.`,
   );
+  l.push(`- Programa de vendedores: ${COMISION_PCT}% de comisión sobre cada proyecto cobrado, mínimo ${MIN_PROYECTOS_MES} proyectos por mes.`);
+  l.push("", "## Contacto", "", `- Mail: ${EMAIL_PUBLICO}`, `- Formulario y cotizador: ${SITE_URL}/cotizar`);
   l.push("", "## Qué incluye cada servicio", "");
   for (const s of SERVICIOS_DETALLE) l.push(`- ${s.nombre}: ${s.entregables.join("; ")}.`);
   l.push("", "## Trabajos publicados", "");

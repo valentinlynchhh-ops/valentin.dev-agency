@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <!-- Editable study only. Adjust to each approved reference; no baked-in type or buttons. -->
+  <defs>
+    <linearGradient id="dark" x1="0" y1="0" x2="0.2" y2="1"><stop stop-color="#1c1b15"/><stop offset=".5" stop-color="#10100d"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient>
+    <linearGradient id="yellowSurface" x1="0" y1="0" x2=".4" y2="1"><stop stop-color="#ffe600"/><stop offset=".55" stop-color="#a28d00"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient>
+    <linearGradient id="rim"><stop stop-color="#ffe600" stop-opacity="0"/><stop offset=".28" stop-color="#ffe600"/><stop offset=".55" stop-color="#f5f5f0"/><stop offset=".9" stop-color="#ffe600"/><stop offset="1" stop-color="#ffe600" stop-opacity=".4"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#ffe600" stop-opacity=".6"/><stop offset="1" stop-color="#ffe600" stop-opacity="0"/></radialGradient>
+    <filter id="bloom" x="-15%" y="-60%" width="130%" height="220%"><feGaussianBlur stdDeviation="12"/></filter>
+    <path id="top" d="M 620 360 C 880 50 1080 30 1610 340"/>
+    <path id="bottomLeft" d="M -30 580 C 210 385 430 565 655 810 S 1000 1030 1160 1000"/>
+    <path id="bottomRight" d="M 590 955 C 930 905 1180 605 1640 510"/>
+  </defs>
+  <rect width="1600" height="900" fill="#0a0a0a"/>
+  <g class="vd-drift-a">
+    <ellipse cx="1430" cy="195" rx="320" ry="145" fill="url(#halo)"/>
+    <path d="M 620 360 C 880 50 1080 30 1610 340 L 1610 900 L 620 900 Z" fill="url(#dark)"/>
+    <use href="#top" stroke="#ffe600" stroke-width="12" opacity=".7" filter="url(#bloom)" fill="none"/>
+    <use href="#top" stroke="url(#rim)" stroke-width="2" fill="none"/>
+  </g>
+  <g class="vd-drift-b">
+    <path d="M -30 580 C 210 385 430 565 655 810 S 1000 1030 1160 1000 L -30 1000 Z" fill="url(#dark)"/>
+    <use href="#bottomLeft" fill="none" stroke="url(#rim)" stroke-width="16" filter="url(#bloom)" opacity=".6"/>
+    <use href="#bottomLeft" fill="none" stroke="url(#rim)" stroke-width="2"/>
+    <path d="M -20 850 C 230 790 480 700 655 810 S 900 1000 1200 1060 L -20 1060 Z" fill="url(#yellowSurface)"/>
+    <path d="M 590 955 C 930 905 1180 605 1640 510 L 1640 1000 Z" fill="url(#dark)"/>
+    <use href="#bottomRight" fill="none" stroke="#ffe600" stroke-width="16" opacity=".65" filter="url(#bloom)"/>
+    <use href="#bottomRight" fill="none" stroke="url(#rim)" stroke-width="2"/>
+  </g>
+</svg>

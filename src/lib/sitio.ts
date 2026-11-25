@@ -31,7 +31,7 @@ export type Pagina = {
 export const PAGINAS: readonly Pagina[] = [
   {
     ruta: "/",
-    titulo: "valentin.dev · Webs y sistemas a medida en Argentina",
+    titulo: "valentin.dev · Diseño y desarrollo digital",
     descripcion: `Diseño y programo webs, landings y sistemas para negocios de Argentina. Landing ${precioTexto(servicioPorId("landing"))}, web con consultas ${precioTexto(servicioPorId("web"))}.`,
     nav: "Inicio",
     prioridad: 1,
@@ -51,13 +51,6 @@ export const PAGINAS: readonly Pagina[] = [
     prioridad: 0.9,
   },
   {
-    ruta: "/trabajos",
-    titulo: "Trabajos reales · valentin.dev",
-    descripcion: "Sitios publicados: un estudio jurídico, una abogada en Pilar y una marca de ropa de Pilates. Con links para verlos en vivo.",
-    nav: "Trabajos",
-    prioridad: 0.8,
-  },
-  {
     ruta: "/como-trabajamos",
     titulo: "Cómo trabajo · valentin.dev",
     descripcion: "Cuatro pasos, 5 días hábiles y dos rondas de cambios para la web a medida. Qué pasa desde que me escribís hasta que se publica.",
@@ -70,6 +63,34 @@ export const PAGINAS: readonly Pagina[] = [
     descripcion: "Precio, plazos, pagos, dominio, hosting y cambios. Las dudas de siempre antes de contratar una web, contestadas claro.",
     nav: "Preguntas",
     prioridad: 0.6,
+  },
+  {
+    ruta: "/museo",
+    titulo: "Museo de trabajos · valentin.dev",
+    descripcion: "Un recorrido por las salas del museo: cada sitio que diseñé y desarrollé, con su vista en escritorio y celular y un link para visitarlo.",
+    nav: "Museo",
+    prioridad: 0.7,
+  },
+  {
+    ruta: "/cotizar",
+    titulo: "Cotizá tu web · valentin.dev",
+    descripcion: "Armá tu web en 4 pasos: tipo de sitio, funciones y detalles. Ves el precio base al instante y me llega tu pedido.",
+    nav: "Cotizar",
+    prioridad: 0.9,
+  },
+  {
+    ruta: "/vendedores",
+    titulo: "Vendedores · valentin.dev",
+    descripcion: "Revendé mis webs y sistemas a medida y cobrá comisión sobre cada proyecto cobrado. Condiciones claras y postulación online.",
+    nav: "Vendedores",
+    prioridad: 0.7,
+  },
+  {
+    ruta: "/recursos",
+    titulo: "Recursos · valentin.dev",
+    descripcion: "Todo lo útil en un solo lugar: cotizador, precios, preguntas frecuentes, cómo trabajo y el museo de trabajos.",
+    nav: "Recursos",
+    prioridad: 0.5,
   },
   {
     ruta: "/contacto",
@@ -96,13 +117,17 @@ export type Trabajo = {
   categoria: string;
   /** Una oración, solo lo que se puede comprobar entrando al sitio. */
   descripcion: string;
-  /** Qué se ve: lo que tiene el sitio publicado. */
+  /** Descripción corta para la cartela del museo. */
+  corta: string;
   incluye: readonly string[];
+  /** Vista vertical 390×506 (tarjetas y marcos). */
+  imagenCard: string;
   imagenEscritorio: string;
   imagenCelular: string;
   altImagen: string;
 };
 
+/** Solo sitios cuya autoría y URL están confirmadas. Estudio Saucedo (que aparece en la maqueta) queda afuera hasta confirmarlo. */
 export const TRABAJOS: readonly Trabajo[] = [
   {
     id: "rydabogados",
@@ -111,34 +136,54 @@ export const TRABAJOS: readonly Trabajo[] = [
     host: "rydabogados.com.ar",
     categoria: "Estudio jurídico",
     descripcion: "Sitio institucional de un estudio jurídico de Buenos Aires: áreas de práctica, jurisdicciones y formulario de contacto.",
+    corta: "Web institucional para estudio jurídico.",
     incluye: ["Áreas de práctica", "Jurisdicciones", "Formulario con motivo de contacto"],
+    imagenCard: "/trabajos/rydabogados-card.jpg",
     imagenEscritorio: "/trabajos/rydabogados-esc.jpg",
     imagenCelular: "/trabajos/rydabogados-cel.jpg",
     altImagen: "Captura de la portada de rydabogados.com.ar",
   },
   {
     id: "masegosa",
-    nombre: "Melisa Masegosa, abogada",
+    nombre: "Melisa Masegosa",
     url: "https://abogadamasegosa.com",
     host: "abogadamasegosa.com",
     categoria: "Abogada · Pilar y CABA",
     descripcion: "Sitio personal de una abogada con reserva de turnos online y consulta directa por WhatsApp.",
+    corta: "Marca personal y turnos online.",
     incluye: ["Agenda de turnos online", "Consulta por WhatsApp", "Preguntas frecuentes"],
+    imagenCard: "/trabajos/masegosa-card.jpg",
     imagenEscritorio: "/trabajos/masegosa-esc.jpg",
     imagenCelular: "/trabajos/masegosa-cel.jpg",
     altImagen: "Captura de la portada de abogadamasegosa.com",
   },
   {
     id: "rebloom",
-    nombre: "REBLOOM",
+    nombre: "Rebloom Active",
     url: "https://rebloomactive.com",
     host: "rebloomactive.com",
     categoria: "Ropa de Pilates · tienda",
     descripcion: "Sitio de una marca de ropa de Pilates: lookbook, guía de talles, preventa con reserva y pago con Mercado Pago.",
+    corta: "Tienda de ropa de Pilates con preventa.",
     incluye: ["Lookbook y fichas de producto", "Guía de talles", "Reserva y pago con Mercado Pago"],
+    imagenCard: "/trabajos/rebloom-card.jpg",
     imagenEscritorio: "/trabajos/rebloom-esc.jpg",
     imagenCelular: "/trabajos/rebloom-cel.jpg",
     altImagen: "Captura de la portada de rebloomactive.com",
+  },
+  {
+    id: "getzleads",
+    nombre: "Get Z Leads",
+    url: "https://getzleads.com",
+    host: "getzleads.com",
+    categoria: "Producto propio · plataforma B2B",
+    descripcion: "Plataforma propia de prospección B2B: bases de negocios locales a pedido, con muestra gratis.",
+    corta: "Plataforma de prospección B2B.",
+    incluye: ["Bases de negocios a pedido", "Muestra gratis", "Mini CRM para trabajar la base"],
+    imagenCard: "/trabajos/getzleads-card.jpg",
+    imagenEscritorio: "/trabajos/getzleads-esc.jpg",
+    imagenCelular: "/trabajos/getzleads-cel.jpg",
+    altImagen: "Captura de la portada de getzleads.com",
   },
 ] as const;
 
@@ -252,6 +297,10 @@ export const FAQ: readonly Pregunta[] = [
 
 /* ---------------------------------- Contacto ---------------------------------- */
 
+/** Contacto público: lo pasó Valentín el 25/11/2026 para publicar en el sitio. Redes sociales: ninguna confirmada, no se muestran. */
+export const EMAIL_PUBLICO = "valentinlynch7@gmail.com";
+export const WHATSAPP_VISIBLE = "+54 9 11 5809-2000";
+
 export const TIPOS_CONSULTA = [
   { valor: "landing", etiqueta: "Una landing" },
   { valor: "web", etiqueta: "Una web con sistema de consultas" },
@@ -261,7 +310,15 @@ export const TIPOS_CONSULTA = [
 
 export type TipoConsulta = (typeof TIPOS_CONSULTA)[number]["valor"];
 
-export const WHATSAPP = (process.env.NEXT_PUBLIC_WHATSAPP ?? "").replace(/\D/g, "");
+/** Tipos que no se eligen en el formulario corto pero también quedan guardados (reunión pedida y cotización armada). */
+export const TIPOS_GUARDADOS = [...TIPOS_CONSULTA.map((t) => t.valor), "reunion", "cotizacion"] as const;
+export const ETIQUETA_TIPO: Record<string, string> = {
+  ...Object.fromEntries(TIPOS_CONSULTA.map((t) => [t.valor, t.etiqueta])),
+  reunion: "Pidió una reunión",
+  cotizacion: "Armó una cotización",
+};
+
+export const WHATSAPP = (process.env.NEXT_PUBLIC_WHATSAPP || "5491158092000").replace(/\D/g, "");
 
 export function linkWhatsApp(texto = "Hola, te escribo desde valentin.dev. Quería consultarte por una web."): string | null {
   return WHATSAPP ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}` : null;

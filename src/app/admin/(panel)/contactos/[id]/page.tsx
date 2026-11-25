@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { repo } from "@/lib/crm";
 import { ESTADOS, ETIQUETA_ESTADO, fechaCorta, hoyArgentina, linkLlamar, linkMail, linkWhatsApp, siguienteEstado } from "@/lib/crmLogica";
-import { TIPOS_CONSULTA } from "@/lib/sitio";
+import { ETIQUETA_TIPO } from "@/lib/sitio";
 import { agregarAccion, agregarNota, completarAccion, guardarDatos, moverEstado } from "../../../acciones";
 import { Pill } from "../../Pill";
 
@@ -120,7 +120,7 @@ export default async function Ficha({ params, searchParams }: { params: Promise<
           <ul className="ad-lista">
             {consultas.map((q) => (
               <li key={q.id} className="ad-nota-item">
-                <span className="ad-nota">{hora(q.creado_at)} · {TIPOS_CONSULTA.find((t) => t.valor === q.tipo)?.etiqueta ?? q.tipo}</span>
+                <span className="ad-nota">{hora(q.creado_at)} · {ETIQUETA_TIPO[q.tipo] ?? q.tipo}</span>
                 <p>{q.mensaje || "(sin mensaje)"}</p>
               </li>
             ))}

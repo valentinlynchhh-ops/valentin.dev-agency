@@ -3,14 +3,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Flecha, Wordmark } from "./Marca";
+import { Flecha, Lockup } from "./Marca";
 
-type Item = { ruta: string; nav: string };
+type Item = { href: string; etiqueta: string };
 
+/* Header fijo: transparente sobre el hero, sólido al bajar. Menú hamburguesa accesible en móvil (Escape, foco, aria-expanded). */
 export function Header({ items }: { items: readonly Item[] }) {
   const pathname = usePathname();
   const [abierto, setAbierto] = useState(false);
+  const [solido, setSolido] = useState(false);
   const boton = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const alScroll = () => setSolido(window.scrollY > 24);
+    alScroll();
+    window.addEventListener("scroll", alScroll, { passive: true });
+    return () => window.removeEventListener("scroll", alScroll);
+  }, []);
 
   useEffect(() => {
     if (!abierto) return;
@@ -29,43 +38,39 @@ export function Header({ items }: { items: readonly Item[] }) {
     };
   }, [abierto]);
 
-  const actual = (ruta: string) => (pathname === ruta ? "page" : undefined);
+  const actual = (href: string) => (!href.includes("#") && pathname === href ? "page" : undefined);
 
   return (
-    <header className="header">
-      <div className="container header__in">
+    <header className={`header${solido || abierto ? " is-solid" : ""}`}>
+      <div className="header__in">
         <Link href="/" aria-label="valentin.dev, inicio" onClick={() => setAbierto(false)} style={{ textDecoration: "none" }}>
-          <Wordmark />
+          <Lockup />
         </Link>
         <nav className="nav" aria-label="Principal">
           {items.map((it) => (
-            <Link key={it.ruta} href={it.ruta} aria-current={actual(it.ruta)}>
-              {it.nav}
+            <Link key={it.href} href={it.href} aria-current={actual(it.href)}>
+              {it.etiqueta}
             </Link>
           ))}
-          <Link href="/contacto" className="btn btn-primary" style={{ minHeight: 44, padding: "8px 18px" }}>
-            Hablemos <Flecha />
-          </Link>
         </nav>
-        <button
-          ref={boton}
-          type="button"
-          className="menu-btn"
-          aria-expanded={abierto}
-          aria-controls="menu-movil"
-          onClick={() => setAbierto((v) => !v)}
-        >
+        <Link href="/#contacto" className="btn btn-primary header__cta">
+          Hablemos <Flecha />
+        </Link>
+        <button ref={boton} type="button" className="menu-btn" aria-expanded={abierto} aria-controls="menu-movil" onClick={() => setAbierto((v) => !v)}>
           {abierto ? "Cerrar" : "Menú"}
         </button>
       </div>
       {abierto && (
         <nav id="menu-movil" className="menu-panel" aria-label="Menú">
           {items.map((it) => (
-            <Link key={it.ruta} href={it.ruta} aria-current={actual(it.ruta)} onClick={() => setAbierto(false)}>
-              {it.nav}
+            <Link key={it.href} href={it.href} aria-current={actual(it.href)} onClick={() => setAbierto(false)}>
+              {it.etiqueta}
             </Link>
           ))}
-          <Link href="/contacto" className="btn btn-primary" onClick={() => setAbierto(false)}>
+          <Link href="/cotizar" onClick={() => setAbierto(false)}>
+            Cotizar
+          </Link>
+          <Link href="/#contacto" className="btn btn-primary" onClick={() => setAbierto(false)}>
             Hablemos <Flecha />
           </Link>
         </nav>

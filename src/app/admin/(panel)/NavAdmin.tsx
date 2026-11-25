@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const ITEMS = [
   { href: "/admin", etiqueta: "Hoy", activo: (p: string) => p === "/admin" },
   { href: "/admin/contactos", etiqueta: "Contactos", activo: (p: string) => p.startsWith("/admin/contactos") && p !== "/admin/contactos/nuevo" },
+  { href: "/admin/vendedores", etiqueta: "Vendedores", activo: (p: string) => p.startsWith("/admin/vendedores") },
   { href: "/admin/contactos/nuevo", etiqueta: "Nuevo", activo: (p: string) => p === "/admin/contactos/nuevo" },
 ];
 

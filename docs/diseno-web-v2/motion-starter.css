@@ -1,0 +1,37 @@
+/* Reference primitives. Scope and integrate with the existing project. Not a complete website. */
+:root {
+  --vd-black:#0A0A0A; --vd-yellow:#FFE600; --vd-white:#F5F5F0;
+  --vd-surface:#141414; --vd-muted:#C4C4BE; --vd-border:#737373;
+  --vd-ease:cubic-bezier(.22,1,.36,1);
+}
+.vd-section {position:relative; isolation:isolate; background:var(--vd-black); color:var(--vd-white);}
+.vd-content {position:relative; z-index:1;}
+.vd-horizon {position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:-1;}
+.vd-horizon svg {width:100%;height:100%;display:block;}
+.vd-horizon .vd-drift-a {transform-origin:50% 70%;animation:vd-float-a 22s ease-in-out infinite alternate;}
+.vd-horizon .vd-drift-b {transform-origin:50% 80%;animation:vd-float-b 18s ease-in-out infinite alternate;}
+@keyframes vd-float-a {from{transform:translate(0,0) scale(1.02)} to{transform:translate(1%,-1.5%) scale(1.05)}}
+@keyframes vd-float-b {from{transform:translate(0,0) scale(1.03)} to{transform:translate(-1%,1.8%) scale(1.06)}}
+/* Markup: <span class="vd-highlight"><span>negocio.</span><span aria-hidden="true" class="vd-highlight-ink">negocio.</span></span>.
+   Both spans inherit identical font and padding. Accessible text appears once. Set data-sweep=true only when visible; remove after animationend, repeat every 5000ms using visibility-aware controller. */
+.vd-highlight {position:relative; display:inline-block; isolation:isolate; padding:.04em .16em; line-height:inherit; white-space:nowrap;}
+.vd-highlight-ink {position:absolute; inset:0; display:block; padding:inherit; border-radius:.26em; background:var(--vd-yellow);color:var(--vd-black); clip-path:inset(0 0 0 0); user-select:none; pointer-events:none;}
+.vd-highlight[data-sweep="true"] .vd-highlight-ink {animation:vd-highlight-sweep 850ms var(--vd-ease) both;}
+@keyframes vd-highlight-sweep {0%{clip-path:inset(0 0 0 0)} 24%{clip-path:inset(0 100% 0 0)} 100%{clip-path:inset(0 0 0 0)}}
+.vd-button {display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:56px;padding:0 30px;border:1px solid transparent;border-radius:24px;background:var(--vd-yellow);color:var(--vd-black);font-weight:600;transition:transform 180ms var(--vd-ease),box-shadow 180ms var(--vd-ease);text-decoration:none;}
+.vd-button--secondary {border-color:var(--vd-border);background:transparent;color:var(--vd-white);}
+.vd-button:hover {transform:translateY(-2px);box-shadow:0 4px 20px #ffe60024;}
+.vd-button:active {transform:scale(.98);}
+.vd-button:focus-visible,.vd-card:focus-visible {outline:2px solid var(--vd-yellow);outline-offset:4px;}
+.vd-card {position:relative;border:1px solid #ffffff25;border-radius:28px;background:var(--vd-surface);transition:transform 240ms var(--vd-ease),border-color 240ms;}
+.vd-card:hover,.vd-card:focus-within {transform:translateY(-3px);border-color:#ffe60090;}
+@supports (corner-shape:squircle) {.vd-button,.vd-card,.vd-highlight-ink {corner-shape:squircle;}}
+/* Apply visibility flag to decoration, not content. Keep readable default without JS. */
+[data-motion-visible="false"] .vd-drift-a,[data-motion-visible="false"] .vd-drift-b,[data-motion-paused="true"] .vd-drift-a,[data-motion-paused="true"] .vd-drift-b {animation-play-state:paused;}
+[data-motion-paused="true"] .vd-highlight-ink {animation:none;clip-path:none;}
+@media (prefers-reduced-motion:reduce) {
+  .vd-horizon .vd-drift-a,.vd-horizon .vd-drift-b,.vd-highlight[data-sweep="true"] .vd-highlight-ink {animation:none;transform:none;clip-path:none;}
+  .vd-button,.vd-card {transition:none;}
+  .vd-button:hover,.vd-card:hover,.vd-card:focus-within {transform:none;}
+}
+@media(max-width:639px){.vd-button{min-height:52px;padding:0 22px;border-radius:20px}.vd-card{border-radius:22px}}

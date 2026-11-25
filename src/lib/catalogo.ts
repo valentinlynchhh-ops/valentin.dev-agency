@@ -63,6 +63,11 @@ export function usd(monto: number): string {
   return `US$${monto.toLocaleString("es-AR", { maximumFractionDigits: 0 })}`;
 }
 
+/** Con hasta 2 decimales ("US$52,5"): para importes calculados, como las comisiones. */
+export function usdFino(monto: number): string {
+  return `US$${monto.toLocaleString("es-AR", { maximumFractionDigits: 2 })}`;
+}
+
 /** "US$350" o "desde US$900". */
 export function precioTexto(s: Servicio): string {
   return s.desde ? `desde ${usd(s.usd)}` : usd(s.usd);

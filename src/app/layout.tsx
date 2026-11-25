@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
+import "@fontsource-variable/inter/wght-italic.css";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
+import "./landing.css";
+import "./paginas.css";
 import { MARCA, SITE_URL } from "@/lib/sitio";
 
 export const metadata: Metadata = {

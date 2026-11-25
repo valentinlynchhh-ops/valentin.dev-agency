@@ -1,0 +1,44 @@
+[
+  {
+    "file": "references/01-hero.jpg",
+    "source": "CA401E57-2E7E-4ABA-9AF0-DE5C53651606.jpeg",
+    "width": 1672,
+    "height": 941,
+    "role": "approved visual reference only"
+  },
+  {
+    "file": "references/02-proyectos.jpg",
+    "source": "7FD20FAC-6D84-4E70-B7EB-2E6C91586AAA.jpeg",
+    "width": 1536,
+    "height": 864,
+    "role": "approved visual reference only"
+  },
+  {
+    "file": "references/03-agendar.jpg",
+    "source": "2AD44374-E676-4FC7-A57B-ED3C35B4C52A.jpeg",
+    "width": 1536,
+    "height": 865,
+    "role": "approved visual reference only"
+  },
+  {
+    "file": "references/04-sobre-mi.jpg",
+    "source": "A55F8D2C-2385-4121-8B78-47AE96625A62.jpeg",
+    "width": 1536,
+    "height": 865,
+    "role": "approved visual reference only"
+  },
+  {
+    "file": "references/05-vendedores.jpg",
+    "source": "1C3B7C8D-6805-4AC8-9C94-4AB0B13E44C7.jpeg",
+    "width": 1536,
+    "height": 865,
+    "role": "approved visual reference only"
+  },
+  {
+    "file": "references/06-footer.jpg",
+    "source": "32E7BCA4-236A-4FD3-93C5-CE8460F4EF0C.jpeg",
+    "width": 1536,
+    "height": 865,
+    "role": "approved visual reference only"
+  }
+]

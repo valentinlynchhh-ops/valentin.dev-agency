@@ -95,7 +95,7 @@ export function FormularioConsulta({ origen = "/" }: { origen?: string }) {
       {aviso && (
         <p id={id("aviso")} className="estado" role="alert">{aviso}</p>
       )}
-      <button type="submit" className="btn btn-inverse" disabled={estado === "enviando"} aria-busy={estado === "enviando"}>
+      <button type="submit" className="btn btn-primary" disabled={estado === "enviando"} aria-busy={estado === "enviando"}>
         {estado === "enviando" ? "Enviando…" : "Enviar consulta"} <Flecha />
       </button>
     </form>

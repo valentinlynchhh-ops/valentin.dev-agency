@@ -4,6 +4,7 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { COOKIE_ADMIN, DURACION_S, adminConfigurado, contrasenaCorrecta, crearToken, tokenValido } from "@/lib/adminSesion";
 import { repo } from "@/lib/crm";
+import { aprobar, rechazar } from "@/lib/vendedoresDb";
 import { esEstado, fechaValida, hoyArgentina, sumarDias, type Origen, ORIGENES } from "@/lib/crmLogica";
 
 /* Acciones del CRM. Cada una revisa la sesión por su cuenta (además del proxy) y guarda solo lo que validó. */
@@ -119,4 +120,18 @@ export async function completarAccion(formData: FormData) {
   await exigirRepo().completar(texto(formData, "accion", 60));
   const vuelta = texto(formData, "vuelta", 80);
   redirect(vuelta.startsWith("/admin") ? vuelta : "/admin");
+}
+
+export async function aprobarVendedor(formData: FormData) {
+  await exigirSesion();
+  if (!repo()) redirect("/admin?error=sin-base");
+  const codigo = await aprobar(texto(formData, "id", 60));
+  redirect(codigo ? "/admin/vendedores?ok=1" : "/admin/vendedores?error=1");
+}
+
+export async function rechazarVendedor(formData: FormData) {
+  await exigirSesion();
+  if (!repo()) redirect("/admin?error=sin-base");
+  await rechazar(texto(formData, "id", 60));
+  redirect("/admin/vendedores?ok=1");
 }

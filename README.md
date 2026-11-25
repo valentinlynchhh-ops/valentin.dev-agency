@@ -6,6 +6,13 @@ La web, el CRM y las herramientas de mi agencia: webs, landings y sistemas a med
 - Mi sistema (CRM): `/admin`
 - Reglas del proyecto: [`CLAUDE.md`](CLAUDE.md) · Diseño: [`design.md`](design.md)
 
+## Qué hay en la web
+- **Landing** con seis secciones: inicio, proyectos (el museo), agendar una reunión, sobre mí, vendedores y cierre.
+- **/museo:** recorrido por salas, una por cada sitio publicado.
+- **/cotizar:** armás tu web en 4 pasos y ves el precio base al instante.
+- **/vendedores:** programa de reventa (15% por proyecto cobrado, mínimo 2 proyectos al mes) con postulación online.
+- **/admin:** mi CRM (contactos, ventas, vendedores).
+
 ## Abrir el proyecto en Claude Code desde el celular
 1. Abrí **claude.ai/code** en el navegador del celular (o la app de Claude) e iniciá sesión.
 2. Tocá **Nueva sesión** y elegí el repo **`valentin.dev-agency`**.

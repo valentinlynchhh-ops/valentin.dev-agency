@@ -1,4 +1,4 @@
-import { TIPOS_CONSULTA, type TipoConsulta } from "./sitio.ts";
+import { TIPOS_GUARDADOS, ETIQUETA_TIPO } from "./sitio.ts";
 
 export type ConsultaEntrada = {
   nombre?: unknown;
@@ -7,6 +7,8 @@ export type ConsultaEntrada = {
   mensaje?: unknown;
   /** Honeypot: un humano nunca lo completa. */
   web?: unknown;
+  /** Día y franja que prefiere para una reunión (solo tipo "reunion"). */
+  preferencia?: unknown;
   origen?: unknown;
 };
 
@@ -14,11 +16,12 @@ export type ConsultaValida = {
   nombre: string;
   email: string | null;
   telefono: string | null;
-  tipo: TipoConsulta;
+  tipo: string;
   mensaje: string;
   origen: string;
 };
 
+export { ETIQUETA_TIPO };
 export type ResultadoValidacion =
   | { ok: true; datos: ConsultaValida }
   | { ok: false; spam: boolean; errores: Partial<Record<"nombre" | "contacto" | "tipo" | "mensaje", string>> };
@@ -37,6 +40,7 @@ export function validarConsulta(e: ConsultaEntrada): ResultadoValidacion {
   const contacto = texto(e.contacto, 160);
   const mensaje = texto(e.mensaje, 2000);
   const tipo = texto(e.tipo, 20);
+  const preferencia = texto(e.preferencia, 80);
 
   if (nombre.length < 2) errores.nombre = "Escribí tu nombre.";
 
@@ -49,13 +53,20 @@ export function validarConsulta(e: ConsultaEntrada): ResultadoValidacion {
     else errores.contacto = "Pasame un mail o un WhatsApp para poder responderte.";
   }
 
-  const tipoValido = TIPOS_CONSULTA.find((t) => t.valor === tipo);
+  const tipoValido = (TIPOS_GUARDADOS as readonly string[]).includes(tipo) ? tipo : null;
   if (!tipoValido) errores.tipo = "Elegí qué necesitás.";
 
   if (Object.keys(errores).length > 0 || !tipoValido) return { ok: false, spam: false, errores };
 
   return {
     ok: true,
-    datos: { nombre, email, telefono, tipo: tipoValido.valor, mensaje, origen: texto(e.origen, 80) || "/" },
+    datos: {
+      nombre,
+      email,
+      telefono,
+      tipo: tipoValido,
+      mensaje: preferencia ? `Prefiere: ${preferencia}${mensaje ? `\n\n${mensaje}` : ""}` : mensaje,
+      origen: texto(e.origen, 80) || "/",
+    },
   };
 }

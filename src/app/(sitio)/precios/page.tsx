@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { metaPagina } from "@/lib/seo";
 import { CONDICIONES_WEB, PRECIO_MINIMO_USD, pagosWeb, usd } from "@/lib/catalogo";
 import { Cabecera } from "@/components/Cabecera";
+import { HighlightText } from "@/components/HighlightText";
 import { PreciosLista } from "@/components/Listas";
 import { Flecha } from "@/components/Marca";
 import { JsonLd } from "@/components/JsonLd";
@@ -16,7 +17,7 @@ export default function Precios() {
       <JsonLd ruta="/precios" />
       <Cabecera
         etiqueta="Precios"
-        titulo={<>Sabés cuánto sale <span className="highlight">antes de arrancar.</span></>}
+        titulo={<>Sabés cuánto sale antes de <HighlightText>arrancar.</HighlightText></>}
         bajada={`Precios en dólares. Nunca trabajo por menos de ${usd(PRECIO_MINIMO_USD)}.`}
       />
       <section className="section" style={{ paddingTop: 0, borderTop: 0 }}>
@@ -51,7 +52,7 @@ export default function Precios() {
             </div>
           </dl>
           <p>
-            <Link href="/contacto" className="btn btn-primary">Pedir mi presupuesto <Flecha /></Link>
+            <Link href="/cotizar" className="btn btn-primary">Cotizar mi web <Flecha /></Link>
           </p>
         </div>
       </section>

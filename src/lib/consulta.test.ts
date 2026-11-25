@@ -34,3 +34,17 @@ test("recorta mensajes largos", () => {
   assert.equal(r.ok, true);
   if (r.ok) assert.equal(r.datos.mensaje.length, 2000);
 });
+
+test("reunión: guarda la preferencia dentro del mensaje", () => {
+  const r = validarConsulta({ nombre: "Ana", contacto: "a@b.co", tipo: "reunion", preferencia: "Miércoles · Tarde", mensaje: "Quiero una web" });
+  assert.equal(r.ok, true);
+  if (r.ok) {
+    assert.equal(r.datos.tipo, "reunion");
+    assert.match(r.datos.mensaje, /^Prefiere: Miércoles · Tarde\n\nQuiero una web$/);
+  }
+});
+
+test("acepta el tipo cotización y rechaza uno inventado", () => {
+  assert.equal(validarConsulta({ nombre: "Ana", contacto: "a@b.co", tipo: "cotizacion" }).ok, true);
+  assert.equal(validarConsulta({ nombre: "Ana", contacto: "a@b.co", tipo: "hackeo" }).ok, false);
+});

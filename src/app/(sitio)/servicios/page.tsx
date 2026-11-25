@@ -1,10 +1,9 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { metaPagina } from "@/lib/seo";
 import { SERVICIOS_DETALLE } from "@/lib/sitio";
 import { precioTexto, servicioPorId } from "@/lib/catalogo";
 import { Cabecera } from "@/components/Cabecera";
-import { Flecha } from "@/components/Marca";
+import { HighlightText } from "@/components/HighlightText";
 import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = metaPagina("/servicios");
@@ -15,7 +14,7 @@ export default function Servicios() {
       <JsonLd ruta="/servicios" />
       <Cabecera
         etiqueta="Servicios"
-        titulo={<>Tres cosas que <span className="highlight">hago bien.</span></>}
+        titulo={<>Tres cosas que hago <HighlightText>bien.</HighlightText></>}
         bajada="Landings, webs a medida y sistemas para ordenar tu negocio. Todo lo diseño y lo programo yo."
       />
       <section className="section" style={{ paddingTop: 0, borderTop: 0 }}>
@@ -38,15 +37,6 @@ export default function Servicios() {
               </div>
             </article>
           ))}
-        </div>
-      </section>
-      <section className="section" data-surface="yellow" style={{ background: "var(--surface)", color: "var(--text)" }}>
-        <div className="container" style={{ display: "grid", gap: 20 }}>
-          <h2 className="h2">¿Cuál te sirve?</h2>
-          <p className="lead">Si no sabés, contame tu negocio y te oriento.</p>
-          <div>
-            <Link href="/contacto" className="btn btn-inverse">Hablemos <Flecha /></Link>
-          </div>
         </div>
       </section>
     </>
