@@ -19,7 +19,7 @@ export default function Trabajos() {
       />
       <section className="section" style={{ paddingTop: 0, borderTop: 0 }}>
         <div className="container">
-          <TrabajosLista variante="full" prioridad />
+          <TrabajosLista variante="full" prioridad nivel="h2" />
         </div>
       </section>
       <section className="section" data-surface="yellow" style={{ background: "var(--surface)", color: "var(--text)" }}>

@@ -21,7 +21,7 @@ export default function Precios() {
       />
       <section className="section" style={{ paddingTop: 0, borderTop: 0 }}>
         <div className="container">
-          <PreciosLista />
+          <PreciosLista nivel="h2" />
         </div>
       </section>
       <section className="section" aria-labelledby="t-cond">

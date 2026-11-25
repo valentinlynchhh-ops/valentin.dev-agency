@@ -3,7 +3,8 @@ import { CATALOGO, precioTexto } from "@/lib/catalogo";
 import { SERVICIOS_DETALLE, TRABAJOS } from "@/lib/sitio";
 import { Flecha } from "./Marca";
 
-export function TrabajosLista({ variante = "home", prioridad = false }: { variante?: "home" | "full"; prioridad?: boolean }) {
+export function TrabajosLista({ variante = "home", prioridad = false, nivel = "h3" }: { variante?: "home" | "full"; prioridad?: boolean; nivel?: "h2" | "h3" }) {
+  const Titulo = nivel;
   return (
     <div className={`trabajos trabajos--${variante}`}>
       {TRABAJOS.map((t, i) => (
@@ -20,7 +21,7 @@ export function TrabajosLista({ variante = "home", prioridad = false }: { varian
           </a>
           <div style={{ display: "grid", gap: 10, alignContent: "start" }}>
             <div className="trabajo__meta">
-              <h3 className="h3">{t.nombre}</h3>
+              <Titulo className="h3">{t.nombre}</Titulo>
               <span className="label">{t.categoria}</span>
             </div>
             <p className="muted">{t.descripcion}</p>
@@ -42,7 +43,8 @@ export function TrabajosLista({ variante = "home", prioridad = false }: { varian
   );
 }
 
-export function PreciosLista() {
+export function PreciosLista({ nivel = "h3" }: { nivel?: "h2" | "h3" }) {
+  const Titulo = nivel;
   return (
     <div>
       {CATALOGO.map((s) => {
@@ -50,7 +52,7 @@ export function PreciosLista() {
         return (
           <div key={s.id} className="precio-fila">
             <div>
-              <h3 className="h3">{s.nombre}</h3>
+              <Titulo className="h3">{s.nombre}</Titulo>
               <p className="muted" style={{ marginTop: 6 }}>{s.resumen}</p>
             </div>
             <p className="precio-monto">{precioTexto(s)}</p>
