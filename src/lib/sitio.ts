@@ -291,7 +291,7 @@ export const FAQ: readonly Pregunta[] = [
   },
   {
     q: "¿Puedo ver trabajos tuyos?",
-    a: "Sí, en la sección de trabajos hay sitios publicados con el link para entrar y verlos en vivo.",
+    a: "Sí, en el museo de trabajos hay sitios publicados con el link para entrar y verlos en vivo.",
   },
 ] as const;
 
