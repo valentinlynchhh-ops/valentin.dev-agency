@@ -1,6 +1,8 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MotionRoot } from "@/components/Motion";
+import Link from "next/link";
+import { linkWhatsApp } from "@/lib/sitio";
 import { RefCapture } from "@/components/RefCapture";
 import { Experience } from "@/components/Experience";
 import "lenis/dist/lenis.css";
@@ -25,6 +27,14 @@ export default function SitioLayout({ children }: { children: React.ReactNode })
       <Header items={NAV} />
       <main id="contenido">{children}</main>
       <Footer />
+      <nav className="x-barra" aria-label="Acciones rápidas">
+        <Link href="/cotizar">Cotizar mi web</Link>
+        {linkWhatsApp() && (
+          <a href={linkWhatsApp()!} rel="noopener" className="x-barra__wa">
+            WhatsApp
+          </a>
+        )}
+      </nav>
     </div>
   );
 }

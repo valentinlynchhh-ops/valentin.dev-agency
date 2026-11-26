@@ -19,7 +19,7 @@ export function Galeria() {
         </div>
         <div className="x-gal__track" data-pin-track tabIndex={-1}>
           {TRABAJOS.map((t, i) => (
-            <article key={t.id} className="x-obra" data-pin-card data-spot>
+            <article key={t.id} className="x-obra" data-pin-card data-spot data-vivo>
               <a className="x-obra__marco" href={t.url} target="_blank" rel="noopener noreferrer" aria-label={`${t.nombre}: visitar ${t.host} (se abre en otra pestaña)`} data-cursor>
                 <span className="x-obra__barra" aria-hidden="true">
                   <i />
@@ -28,7 +28,7 @@ export function Galeria() {
                   <b>{t.host}</b>
                 </span>
                 <span className="x-obra__vista">
-                  <Image src={`/trabajos/${t.id}-largo.jpg`} alt={t.altImagen} width={585} height={3600} sizes="(min-width: 1024px) 28vw, 80vw" priority={i === 0} />
+                  <Image src={`/trabajos/${t.id}-largo.webp`} alt={t.altImagen} width={585} height={3600} unoptimized loading={i === 0 ? "eager" : "lazy"} decoding="async" />
                 </span>
                 <span className="x-obra__ver" aria-hidden="true">
                   Recorrer la web

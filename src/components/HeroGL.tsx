@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { nivelAlto, puntero } from "@/lib/perf";
 
 /* Fondo del hero: seda de luz generada en la GPU (WebGL1, un solo fragment shader, sin librerías).
    Reacciona al mouse (--px/--py) y al scroll. Se dibuja a baja resolución y se escala por CSS.
@@ -42,6 +43,10 @@ export function HeroGL() {
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
+    if (!nivelAlto()) {
+      canvas.remove(); /* dispositivos livianos: queda el póster (imagen) con una deriva suave */
+      return;
+    }
     const gl = canvas.getContext("webgl", { antialias: false, alpha: false, powerPreference: "low-power" });
     if (!gl) {
       canvas.remove();
@@ -88,16 +93,14 @@ export function HeroGL() {
     const t0 = performance.now();
 
     const tamano = () => {
-      const esc = Math.min(1, 900 / Math.max(canvas.clientWidth, 1)) * Math.min(devicePixelRatio, 1.5) * 0.7;
+      const esc = Math.min(1, 800 / Math.max(canvas.clientWidth, 1)) * Math.min(devicePixelRatio, 1.25) * 0.6;
       canvas.width = Math.max(2, Math.round(canvas.clientWidth * esc));
       canvas.height = Math.max(2, Math.round(canvas.clientHeight * esc));
       gl.viewport(0, 0, canvas.width, canvas.height);
     };
     const dibujar = (ahora: number) => {
-      const px = Number.parseFloat(root.style.getPropertyValue("--px")) || 0.5;
-      const py = Number.parseFloat(root.style.getPropertyValue("--py")) || 0.5;
-      mx += (px - mx) * 0.06;
-      my += (1 - py - my) * 0.06;
+      mx += (puntero.x - mx) * 0.06;
+      my += (1 - puntero.y - my) * 0.06;
       const y = Math.min(scrollY / Math.max(innerHeight, 1), 1.4);
       gl.uniform2f(uR, canvas.width, canvas.height);
       gl.uniform1f(uT, (ahora - t0) / 1000 + 12);
@@ -105,7 +108,18 @@ export function HeroGL() {
       gl.uniform1f(uS, y);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
+    /* Vigilante: si el promedio de los primeros cuadros supera ~28 ms (menos de ~35 fps), se apaga y queda el póster. */
+    let cuadros = 0;
+    let acum = 0;
+    let previo = 0;
     const animar = (ahora: number) => {
+      if (previo && cuadros > 20 && cuadros <= 100) acum += ahora - previo;
+      previo = ahora;
+      cuadros++;
+      if (cuadros === 100 && acum / 80 > 28) {
+        canvas.remove();
+        return;
+      }
       dibujar(ahora);
       raf = 0;
       pedir();

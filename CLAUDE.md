@@ -23,6 +23,8 @@ Stack: Next.js 16 (App Router, Turbopack), React 19, Tailwind 4, `motion`, Supab
 - **Una herramienta de diseño por vez.** Si varias sesiones tocan la web a la vez, se pisan.
 - **No rediseñar lo que el dueño ya aprobó.** Se cambian cosas pedidas, no se "mejora" a gusto propio.
 
+- **Rendimiento por niveles (web v4, 26/11/2026):** `src/lib/perf.ts` decide `html[data-perf="high"|"lite"]` (alto = escritorio con mouse, 6+ núcleos, memoria ≥4 GB y sin ahorro de datos). **Solo el nivel alto** usa WebGL (`HeroGL`, con vigilante de cuadros por segundo), scroll con inercia (Lenis), cursor propio, grano, pin de la galería y animaciones de pintura. El resto (celulares, equipos viejos) ve póster de seda (`public/img/seda-{d,m}.webp`) con deriva por `transform`, sin filtros SVG ni desenfoques, y el museo con marcos de teléfono que se recorren solos. **No escribir variables CSS en `<html>` desde scroll o puntero** (invalida todo el estilo): usar el elemento propio o el objeto `puntero` de `perf.ts`. Fuentes solo latinas en `public/fonts` (`app/fuentes.css`, precargadas). Probador de la home (`Probador.tsx`): muestras ficticias de `/demo/ejemplo-*` en iframe del mismo sitio (`frame-ancestors 'self'`, solo para `/demo`); sus capturas están en `public/img/probador-*.webp`. Medición local de Lighthouse móvil: home 65 → ~90, TBT 1860 → ~70 ms.
+
 ## Infra
 - **GitHub:** `valentinlynchhh-ops/valentin.dev-agency`. Rama de producción: `main`.
 - **Vercel:** proyecto `valentin-dev`, equipo `valentin-lynch-s-projects`. Funciones en `gru1` (São Paulo, `vercel.json`). **Push a `main` = deploy a producción.** Cada rama y cada pull request genera una **vista previa** con su propia URL.

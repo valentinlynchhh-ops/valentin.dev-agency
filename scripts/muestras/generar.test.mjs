@@ -137,7 +137,7 @@ test("cabeceras de la ruta: noindex, caché corta y CSP sin conexiones", () => {
   assert.match(c["content-type"], /^text\/html/);
   assert.match(CSP_DEMO, /connect-src 'none'/);
   assert.match(CSP_DEMO, /font-src https:\/\/fonts\.gstatic\.com/);
-  assert.match(CSP_DEMO, /frame-ancestors 'none'/);
+  assert.match(CSP_DEMO, /frame-ancestors 'self'/);
   assert.equal(cabecerasDemo(false)["cache-control"], "no-store");
 });
 

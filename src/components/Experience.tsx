@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { nivelAlto, puntero } from "@/lib/perf";
 
 /* Capa de experiencia (v3). Un solo componente cliente con:
    - scroll con inercia (Lenis) y barra de progreso (--sp en <html>);
@@ -18,14 +19,18 @@ export function Experience() {
     const root = document.documentElement;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)");
     const fino = matchMedia("(hover: hover) and (pointer: fine)");
+    const alto = nivelAlto();
+    root.dataset.perf = alto ? "high" : "lite";
     const permitido = () => !reduce.matches && root.dataset.motion !== "paused";
+    const progreso = document.querySelector<HTMLElement>(".x-progreso");
+    const hero = document.querySelector<HTMLElement>(".x-hero");
     let lenis: Lenis | null = null;
     let raf = 0;
     let vivo = true;
 
     /* ---------- scroll con inercia ---------- */
     const iniciarLenis = () => {
-      if (lenis || !permitido()) return;
+      if (lenis || !alto || !permitido()) return;
       lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 0.95, anchors: { offset: -84 } });
       root.dataset.lenis = "on";
     };
@@ -45,7 +50,7 @@ export function Experience() {
     const medir = () => {
       vw = innerWidth;
       vh = innerHeight;
-      const fijar = permitido() && vw >= 1024 && fino.matches;
+      const fijar = alto && permitido() && vw >= 1024;
       root.dataset.pin = fijar ? "on" : "off";
       for (const el of pines) {
         const pista = el.querySelector<HTMLElement>("[data-pin-track]");
@@ -55,22 +60,38 @@ export function Experience() {
       }
     };
 
-    const alScroll = () => {
-      const y = scrollY;
-      const total = root.scrollHeight - vh;
-      root.style.setProperty("--sp", total > 0 ? (y / total).toFixed(4) : "0");
-      root.style.setProperty("--sy", String(Math.round(y)));
-      if (root.dataset.pin === "on") {
-        for (const el of pines) {
-          const r = el.getBoundingClientRect();
-          const largo = r.height - vh;
-          el.style.setProperty("--p", (largo > 0 ? clamp(-r.top / largo) : 0).toFixed(4));
+    /* Solo se calculan las secciones que están cerca de la pantalla (IntersectionObserver) y la barra se escribe
+       directo en su elemento: nada de variables en <html>, que invalidaría el estilo de todo el documento. */
+    const cerca = new Set<HTMLElement>();
+    const ioCerca = new IntersectionObserver(
+      (es) => {
+        for (const e of es) {
+          if (e.isIntersecting) cerca.add(e.target as HTMLElement);
+          else cerca.delete(e.target as HTMLElement);
         }
-      }
-      for (const el of scrubs) {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--t", clamp((vh - r.top) / (vh + r.height)).toFixed(4));
-      }
+        alScroll();
+      },
+      { rootMargin: "30% 0px 30% 0px" },
+    );
+    [...pines, ...scrubs].forEach((el) => ioCerca.observe(el));
+    let tick = 0;
+    const alScroll = () => {
+      if (tick) return;
+      tick = requestAnimationFrame(() => {
+        tick = 0;
+        const total = root.scrollHeight - vh;
+        if (progreso) progreso.style.transform = `scaleX(${total > 0 ? (scrollY / total).toFixed(4) : 0})`;
+        for (const el of cerca) {
+          const r = el.getBoundingClientRect();
+          if (el.hasAttribute("data-pin")) {
+            if (root.dataset.pin !== "on") continue;
+            const largo = r.height - vh;
+            el.style.setProperty("--p", (largo > 0 ? clamp(-r.top / largo) : 0).toFixed(4));
+          } else {
+            el.style.setProperty("--t", clamp((vh - r.top) / (vh + r.height)).toFixed(4));
+          }
+        }
+      });
     };
 
     /* ---------- contadores ---------- */
@@ -100,6 +121,10 @@ export function Experience() {
     );
     contadores.forEach((c) => io.observe(c));
 
+    /* Elementos que solo animan mientras se ven ([data-vivo] → data-in): en celular las vistas de las webs se recorren solas. */
+    const ioVivo = new IntersectionObserver((es) => es.forEach((e) => ((e.target as HTMLElement).dataset.in = e.isIntersecting ? "1" : "0")), { threshold: 0.35 });
+    document.querySelectorAll("[data-vivo]").forEach((el) => ioVivo.observe(el));
+
     /* ---------- puntero, cursor, magnético, luz ---------- */
     const cursor = document.getElementById("vd-cursor");
     let cx = -100;
@@ -107,11 +132,15 @@ export function Experience() {
     let tx = -100;
     let ty = -100;
     const alMover = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse") return;
+      if (!alto || e.pointerType !== "mouse") return;
       tx = e.clientX;
       ty = e.clientY;
-      root.style.setProperty("--px", (e.clientX / vw).toFixed(3));
-      root.style.setProperty("--py", (e.clientY / vh).toFixed(3));
+      puntero.x = e.clientX / vw;
+      puntero.y = e.clientY / vh;
+      if (hero && scrollY < vh) {
+        hero.style.setProperty("--px", puntero.x.toFixed(3));
+        hero.style.setProperty("--py", puntero.y.toFixed(3));
+      }
       const t = e.target as Element | null;
       const sobre = t?.closest("a, button, summary, [data-cursor], input, textarea, select, label");
       cursor?.toggleAttribute("data-hover", !!sobre);
@@ -150,13 +179,13 @@ export function Experience() {
     const aplicar = () => {
       if (permitido()) iniciarLenis();
       else pararLenis();
-      root.dataset.cursor = permitido() && fino.matches ? "on" : "off";
+      root.dataset.cursor = alto && permitido() && fino.matches ? "on" : "off";
       medir();
       alScroll();
     };
 
     aplicar();
-    raf = requestAnimationFrame(ciclo);
+    if (alto) raf = requestAnimationFrame(ciclo);
     addEventListener("scroll", alScroll, { passive: true });
     addEventListener("resize", aplicar);
     addEventListener("pointermove", alMover, { passive: true });
@@ -196,6 +225,9 @@ export function Experience() {
       document.removeEventListener("pointerout", alSalir);
       document.removeEventListener("focusin", alFoco);
       mo.disconnect();
+      ioCerca.disconnect();
+      ioVivo.disconnect();
+      cancelAnimationFrame(tick);
       ro.disconnect();
       io.disconnect();
       reduce.removeEventListener("change", aplicar);

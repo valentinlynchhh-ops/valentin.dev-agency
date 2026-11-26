@@ -20,7 +20,7 @@ export const CSP_DEMO = [
   "connect-src 'none'",
   "base-uri 'none'",
   "form-action 'none'",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self'",
   "object-src 'none'",
 ].join("; ");
 

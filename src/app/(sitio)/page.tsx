@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { metaPagina } from "@/lib/seo";
 import { PASOS, SERVICIOS_DETALLE, TRABAJOS } from "@/lib/sitio";
-import { precioTexto, servicioPorId } from "@/lib/catalogo";
+import { CONDICIONES_WEB, precioTexto, servicioPorId } from "@/lib/catalogo";
 import { COMISION_PCT, MIN_PROYECTOS_MES, ejemplosComision } from "@/lib/vendedores";
 import { Flecha } from "@/components/Marca";
 import { Icon } from "@/components/Icon";
@@ -12,6 +12,7 @@ import { HighlightText } from "@/components/HighlightText";
 import { HeroGL } from "@/components/HeroGL";
 import { Split, Marquee } from "@/components/Split";
 import { Galeria } from "@/components/Galeria";
+import { Probador } from "@/components/Probador";
 import { Dialogo } from "@/components/Dialogo";
 import { ReunionPanel } from "@/components/ReunionPanel";
 import { PostularForm } from "@/components/PostularForm";
@@ -34,7 +35,10 @@ export default function Inicio() {
 
       {/* 01 · Hero: shader de seda + titular cinético */}
       <section className="x-hero" aria-labelledby="t-h1" data-scrub>
-        <HorizonScene variante="hero" id="hero" ligera />
+        <picture className="x-poster">
+          <source media="(max-width: 760px)" srcSet="/img/seda-m.webp" />
+          <img src="/img/seda-d.webp" alt="" width={1600} height={900} fetchPriority="high" decoding="async" />
+        </picture>
         <HeroGL />
         <div className="x-hero__vel" aria-hidden="true" />
         <span className="x-px x-px--a" aria-hidden="true" />
@@ -61,6 +65,11 @@ export default function Inicio() {
           <p className="vd-hero__mini x-hero__mini">
             ¿Querés saber cuánto sale tu web? <Link href="/cotizar">Cotizala acá ↗</Link>
           </p>
+          <ul className="x-chips" aria-label="Cómo trabajo, en resumen">
+            <li>Precio cerrado antes de arrancar</li>
+            <li>{CONDICIONES_WEB.plazoDiasHabiles} días hábiles</li>
+            <li>Trato directo conmigo</li>
+          </ul>
         </div>
         <a href="#proyectos" className="x-scroll" aria-label="Ir a los proyectos">
           <span>Scroll</span>
@@ -103,6 +112,9 @@ export default function Inicio() {
 
       {/* 03 · Proyectos: el museo (galería fijada) */}
       <Galeria />
+
+      {/* 03b · Probador en vivo */}
+      <Probador />
 
       {/* 04 · Proceso */}
       <section className="x-proc" aria-labelledby="t-proc" data-scrub>
